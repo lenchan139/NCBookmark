@@ -1,5 +1,5 @@
 # NCBookmark Viewer
-This is a Veeeeeeeeerrrrrry lightweight browser using webview. I made it because my needs.   
+This is a Veeeeeeeeerrrrrry lightweight viewer for NextCloud Bookamrk. I made it because my needs.   
 
 ## Licenses
 Basically, NCBookmark is under GPLv3.
@@ -9,7 +9,7 @@ Basically, NCBookmark is under GPLv3.
   A few files is coding by myself. Those files is licensing under GPLv3.  
   You can go to (http://wiki.linux.org.hk/w/GPLv3) view the full content of the license.
 ## Screenshots
-<img src="https://github.com/lenchan139/LightBrowser/blob/master/screenshots/photo_2017-04-15_16-52-36.jpg?raw=true" width="240"> <img src="https://github.com/lenchan139/LightBrowser/blob/master/screenshots/photo_2017-04-15_16-52-32.jpg?raw=true" width="240"> 
+<img src="https://github.com/lenchan139/NCBookmark/blob/master/screenshots/photo_2017-04-15_17-12-21.jpg?raw=true" width="320"> <img src="https://github.com/lenchan139/NCBookmark/blob/master/screenshots/photo_2017-04-15_17-12-19.jpg?raw=true" width="320"> 
 ## Download
 You can download this application from Play Store or Aptoide. Aptoide may faster than the Play Store.
 - [Play Store](https://play.google.com/store/apps/details?id=org.lenchan139.ncbookmark)
