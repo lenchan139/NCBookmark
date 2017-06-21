@@ -46,6 +46,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/password"
         android:inputType="textPassword"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="API Version: "/>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerApi">
+
+        </Spinner>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

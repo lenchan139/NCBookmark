@@ -1,9 +1,13 @@
 <resources>
-    <string name="app_name">NC BookmarkViewer</string>
+    <string name="app_name">NC Bookmark Viewer</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Clear User Data</string>
     <string name="title_activity_list_view">ListViewActivity</string>
+    <string name="add_bookmark">Add Bookmark</string>
+    <string name="title_activity_bookmark_view_v2">BookmarkViewActivityV2</string>
+    <string name="title_activity_add_bookmark_v2">AddBookmarkActivityV2</string>
+    <string name="title_activity_edit_bookmark_v2">EditBookmarkActivityV2</string>
 </resources>

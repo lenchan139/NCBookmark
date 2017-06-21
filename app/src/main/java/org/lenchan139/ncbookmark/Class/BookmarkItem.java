@@ -8,6 +8,7 @@ public class BookmarkItem {
     String title;
     String url;
     String tags;
+    int id;
 
     public void setTags(String tags) {
         this.tags = tags;
@@ -31,6 +32,14 @@ public class BookmarkItem {
 
     public String getUrl() {
         return url;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

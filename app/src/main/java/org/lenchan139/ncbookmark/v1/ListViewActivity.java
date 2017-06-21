@@ -1,4 +1,4 @@
-package org.lenchan139.ncbookmark;
+package org.lenchan139.ncbookmark.v1;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import org.lenchan139.ncbookmark.R;
 
 public class ListViewActivity extends AppCompatActivity {
 

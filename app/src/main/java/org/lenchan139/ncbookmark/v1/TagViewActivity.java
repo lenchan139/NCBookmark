@@ -1,16 +1,11 @@
-package org.lenchan139.ncbookmark;
+package org.lenchan139.ncbookmark.v1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,13 +16,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.lenchan139.ncbookmark.Class.BookmarkItem;
+import org.lenchan139.ncbookmark.MainActivity;
+import org.lenchan139.ncbookmark.R;
 
 import java.io.IOException;
 import java.net.URL;
@@ -190,6 +186,9 @@ public class TagViewActivity extends AppCompatActivity {
             startActivity(new Intent(this,MainActivity.class));
             finish();
             return true;
+        }else if(id == R.id.add_bookmark){
+            Intent intent = new Intent(this,AddBookmarkActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

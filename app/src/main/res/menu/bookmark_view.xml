@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/add_bookmark"
+        android:orderInCategory="100"
+        android:title="@string/add_bookmark"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_reset"
         android:orderInCategory="100"
         android:title="@string/action_settings"

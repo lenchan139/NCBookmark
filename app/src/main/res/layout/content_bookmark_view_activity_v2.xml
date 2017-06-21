@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="org.lenchan139.ncbookmark.v1.ListViewActivity"
-    tools:showIn="@layout/activity_list_view">
-<ListView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/tagList"></ListView>
+    tools:context="org.lenchan139.ncbookmark.v2.BookmarkViewActivityV2"
+    tools:showIn="@layout/activity_bookmark_view_v2">
+
 </android.support.constraint.ConstraintLayout>

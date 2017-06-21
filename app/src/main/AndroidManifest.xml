@@ -20,16 +20,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TagViewActivity"
+            android:name=".v1.TagViewActivity"
             android:label="View Tag"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BookmarkViewActivity"
+            android:name=".v1.BookmarkViewActivity"
             android:label="bookmarkview"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ListViewActivity"
+            android:name=".v1.ListViewActivity"
             android:label="@string/title_activity_list_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".v1.AddBookmarkActivity" />
+        <activity
+            android:name=".v2.TagListActivityV2"
+            android:label="NC Bookmark Tags" />
+        <activity
+            android:name=".v2.BookmarkViewActivityV2"
+            android:label="@string/title_activity_bookmark_view_v2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".v2.AddBookmarkActivityV2"
+            android:label="@string/title_activity_add_bookmark_v2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".v2.EditBookmarkActivityV2"
+            android:label="@string/title_activity_edit_bookmark_v2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
