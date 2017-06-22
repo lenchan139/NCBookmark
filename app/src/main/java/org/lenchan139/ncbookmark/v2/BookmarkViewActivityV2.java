@@ -79,7 +79,7 @@ public class BookmarkViewActivityV2 extends AppCompatActivity {
             url = url + "/";
         }
         if(url!=null && username!=null && password!=null){
-            jsonUrl = url + "index.php/apps/bookmarks/public/rest/v2/bookmark?sortby=tags";
+            jsonUrl = url + "index.php/apps/bookmarks/public/rest/v2/bookmark?sortby=tags&page=-1";
             Log.v("jsonUrl",jsonUrl);
         }
         gloTag = tag;
