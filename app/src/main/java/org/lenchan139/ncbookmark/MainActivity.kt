@@ -76,12 +76,14 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("url", url)
             intent.putExtra("username", username)
             intent.putExtra("password", password)
+            sp.edit().putInt("apiVersion", 1).commit()
             return intent
         } else if (spinner.selectedItem.toString().contains("v2")) {
             val intent = Intent(activity, TagListActivityV2::class.java)
             intent.putExtra("url", url)
             intent.putExtra("username", username)
             intent.putExtra("password", password)
+            sp.edit().putInt("apiVersion", 2).commit()
             return intent
         } else {
             return null

@@ -1,6 +1,7 @@
 package org.lenchan139.ncbookmark.v2
 
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -22,6 +23,7 @@ import org.json.JSONException
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.lenchan139.ncbookmark.MainActivity
 import org.lenchan139.ncbookmark.R
 
 import java.io.IOException
@@ -67,15 +69,30 @@ class AddBookmarkActivityV2 : AppCompatActivity() {
         var inTitle = intent.getStringExtra("inTitle")
         var inTag = intent.getStringExtra("inTag")
         //
-        urlNt = intent.getStringExtra("url")
-        username = intent.getStringExtra("username")
-        password = intent.getStringExtra("password")
+        var sp = getSharedPreferences("data", 0)
+        urlNt = sp.getString("url",null)
+        username = sp.getString("username",null)
+        password = sp.getString("password",null)
+        var apiVer = sp.getInt("apiVersion",0)
         login = username + ":" + password
-        if (urlNt != null && username != null && password != null) {
+        if (urlNt != null && username != null && password != null && apiVer >= 2) {
             btnSubmit.setOnClickListener { AddBookmarkTask().execute() }
         } else {
-
+            Toast.makeText(this,"maybe you are not login yet.",Toast.LENGTH_SHORT).show()
+            finish()
         }
+
+        if(inUrl!=null){
+            edtUrl.setText(inUrl)
+        }
+        if(inTag!=null){
+            edtTag.setText(inTag)
+        }
+        if(inTitle!=null){
+            edtTitle.setText(inTitle)
+        }
+
+
 
         btnSelectTag.setOnClickListener { fetchTagsTask().execute() }
     }

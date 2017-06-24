@@ -42,7 +42,12 @@
         <activity
             android:name=".v2.AddBookmarkActivityV2"
             android:label="@string/title_activity_add_bookmark_v2"
-            android:theme="@style/AppTheme.NoActionBar" />
+
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+            <action android:name="org.lenchan139.ncbookmark.v2.addBookmarkAction" />
+            </intent-filter>
+            </activity>
         <activity
             android:name=".v2.EditBookmarkActivityV2"
             android:label="@string/title_activity_edit_bookmark_v2"
