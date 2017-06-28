@@ -38,7 +38,7 @@ class TagListActivityV2 : AppCompatActivity() {
     internal var username: String? = null
     internal var password: String? = null
     internal lateinit var login: String
-    internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/bookmark?page=-1"
+    internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/tag"
 
     override fun onResume() {
         DlTask().execute()
@@ -92,35 +92,11 @@ class TagListActivityV2 : AppCompatActivity() {
 
                 val jsonList = ArrayList<BookmarkItem>()
                 try {
-                    //JSONObject jsonResponse = new JSONObject(jsonText);
-
-                    //raw to raw list
-                    val a = JSONObject(result!!.body().text())
-                    val cast = a.getJSONArray("data")
-                    for (i in 0..cast.length() - 1) {
-                        val tempJ = cast.getJSONObject(i)
-                        val tempBi = BookmarkItem()
-                        tempBi.url = tempJ.getString("url")
-                        tempBi.tags = tempJ.getString("tags")
-                        tempBi.title = tempJ.getString("title")
-                        jsonList.add(tempBi)
-                        Log.v("currJSONObj", tempBi.toString())
-                    }
-                    //get all tags
                     val listTags = ArrayList<String>()
-                    for (i1 in jsonList.indices) {
-                        val tempTags = jsonList[i1].tags
-                        var isHad = false
-                        //check tag if had.
-                        for (i2 in listTags.indices) {
-                            if (tempTags == listTags[i2]) {
-                                isHad = true
-                            }
-                        }
-                        //if not had, add it.
-                        if (!isHad) {
-                            listTags.add(tempTags!!)
-                        }
+                    var jsonArray = JSONArray(result!!.body().text())
+                    listTags.add("!ungrouped")
+                    for (i in 0..jsonArray.length()-1){
+                        listTags.add(jsonArray.getString(i))
                     }
                     Log.v("listArray", listTags.toString())
 

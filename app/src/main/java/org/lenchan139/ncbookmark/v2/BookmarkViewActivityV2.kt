@@ -28,6 +28,8 @@ import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.lenchan139.ncbookmark.Class.BookmarkItem
+import org.lenchan139.ncbookmark.Class.BookmarkItemV2
+import org.lenchan139.ncbookmark.Class.TagsItem
 import org.lenchan139.ncbookmark.R
 import org.lenchan139.ncbookmark.v1.BookmarkViewActivity
 
@@ -121,7 +123,7 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: Long?) {
-            val jsonList = ArrayList<BookmarkItem>()
+            val jsonList = ArrayList<BookmarkItemV2>()
             try {
                 //JSONObject jsonResponse = new JSONObject(jsonText);
 
@@ -134,9 +136,9 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
                     for (i in 0..cast.length() - 1) {
                         val tempJ = cast.getJSONObject(i)
                         if (tempJ.getString("tags") == "[\"\"]") {
-                            val tempBi = BookmarkItem()
+                            val tempBi = BookmarkItemV2()
                             tempBi.url = tempJ.getString("url")
-                            tempBi.tags = tempJ.getString("tags")
+                            tempBi.tags = tempJ.getJSONArray("tags")
                             tempBi.title = tempJ.getString("title")
                             tempBi.id = tempJ.getInt("id")
                             jsonList.add(tempBi)
@@ -146,9 +148,9 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
                 } else {
                     for (i in 0..cast.length() - 1) {
                         val tempJ = cast.getJSONObject(i)
-                        val tempBi = BookmarkItem()
+                        val tempBi = BookmarkItemV2()
                         tempBi.url = tempJ.getString("url")
-                        tempBi.tags = tempJ.getString("tags")
+                        tempBi.tags = tempJ.getJSONArray("tags")
                         tempBi.title = tempJ.getString("title")
                         tempBi.id = tempJ.getInt("id")
                         jsonList.add(tempBi)

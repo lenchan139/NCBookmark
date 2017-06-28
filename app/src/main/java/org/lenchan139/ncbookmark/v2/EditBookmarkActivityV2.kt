@@ -23,6 +23,7 @@ import org.json.JSONObject
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.lenchan139.ncbookmark.Class.TagsItem
 import org.lenchan139.ncbookmark.R
 
 import java.io.IOException
@@ -87,7 +88,7 @@ class EditBookmarkActivityV2 : AppCompatActivity() {
 
     private inner class EditBookmarkTask : AsyncTask<URL, Int, Long>() {
         internal var rid = bookmarkId
-        internal var tag: String? = null
+        internal lateinit var tag: Array<String>
         internal var url: String? = null
         internal var title: String? = null
         internal var des: String? = null
@@ -97,13 +98,16 @@ class EditBookmarkActivityV2 : AppCompatActivity() {
         internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/bookmark/" + rid
         internal val base64login = String(Base64.encode(login.toByteArray(), 0))
         override fun onPreExecute() {
-            tag = edtTag.text.toString()
+            val tempTag = TagsItem().strToArray(edtTag.text.toString())
+            if(tempTag !=null){
+                tag = tempTag
+            }
             url = edtUrl.text.toString()
             title = edtTitle.text.toString()
             des = edtDescr.text.toString()
-            if (tag == null || url == null || title == null) {
+            if (url == null || title == null) {
                 no_error = false
-                Toast.makeText(this@EditBookmarkActivityV2, "Please tag, url and title cannot be empty.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditBookmarkActivityV2, "Please, url and title cannot be empty.", Toast.LENGTH_SHORT).show()
             }
             if (des == null) {
                 des = ""
@@ -115,16 +119,18 @@ class EditBookmarkActivityV2 : AppCompatActivity() {
         override fun doInBackground(vararg params: URL): Long? {
 
             try {
-                result = Jsoup.connect(urlNt!! + urlSe)
+                var jsoup = Jsoup.connect(urlNt!! + urlSe)
                         .ignoreContentType(true)
                         .header("Authorization", "Basic " + base64login)
                         .method(Connection.Method.PUT)
                         .data("url", url)
                         .data("record_id", rid.toString())
-                        .data("item[tags][]", tag)
                         .data("title", title)
                         .data("description", des)
-                        .execute().parse()
+                    for(i in 0..tag.size-1){
+                        jsoup.data("item[tags][]", tag.get(i).trim())
+                    }
+                       result = jsoup.execute().parse()
             } catch (e: IOException) {
                 e.printStackTrace()
                 error_msg = e.message
@@ -232,7 +238,7 @@ class EditBookmarkActivityV2 : AppCompatActivity() {
                     if (cast.getJSONObject(i).getInt("id") == rid) {
                         finalObject = cast.getJSONObject(i)
                         edtDescr.setText(finalObject!!.getString("description"))
-                        edtTag.setText(finalObject.getJSONArray("tags").getString(0))
+                        edtTag.setText(TagsItem().jsonArrayToString(finalObject.getJSONArray("tags")))
                         edtTitle.setText(finalObject.getString("title"))
                         edtUrl.setText(finalObject.getString("url"))
 

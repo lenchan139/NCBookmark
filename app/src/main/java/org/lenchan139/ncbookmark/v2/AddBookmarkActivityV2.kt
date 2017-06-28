@@ -23,6 +23,7 @@ import org.json.JSONException
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.lenchan139.ncbookmark.Class.TagsItem
 import org.lenchan139.ncbookmark.MainActivity
 import org.lenchan139.ncbookmark.R
 
@@ -146,7 +147,7 @@ class AddBookmarkActivityV2 : AppCompatActivity() {
     }
 
     private inner class AddBookmarkTask : AsyncTask<URL, Int, Long>() {
-        internal var tag: String? = null
+        internal lateinit var tag: Array<String>
         internal var url: String? = null
         internal var title: String? = null
         internal var des: String? = null
@@ -155,12 +156,16 @@ class AddBookmarkActivityV2 : AppCompatActivity() {
         internal var error_msg: String? = null
         internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/bookmark"
         internal val base64login = String(Base64.encode(login.toByteArray(), 0))
+
         override fun onPreExecute() {
-            tag = edtTag.text.toString()
+            val tampTag = TagsItem().strToArray(edtTag.text.toString())
+            if(tampTag!= null){
+                tag = tampTag
+            }
             url = edtUrl.text.toString()
             title = edtTitle.text.toString()
             des = edtDescr.text.toString()
-            if (tag == null || url == null || title == null) {
+            if ( url == null || title == null) {
                 no_error = false
                 Toast.makeText(this@AddBookmarkActivityV2, "Please tag, url and title cannot be empty.", Toast.LENGTH_SHORT).show()
             }
@@ -174,15 +179,18 @@ class AddBookmarkActivityV2 : AppCompatActivity() {
             if (no_error) {
 
                 try {
-                    result = Jsoup.connect(urlNt!! + urlSe)
+                    var jsoup = Jsoup.connect(urlNt!! + urlSe)
                             .ignoreContentType(true)
                             .header("Authorization", "Basic " + base64login)
                             .method(Connection.Method.POST)
                             .data("url", url)
-                            .data("item[tags][]", tag)
                             .data("title", title)
                             .data("description", des)
-                            .execute().parse()
+                           for(i in 0..tag.size-1){
+                               jsoup.data("item[tags][]", tag.get(i).trim())
+                           }
+                    result = jsoup.execute().parse()
+
                 } catch (e: IOException) {
                     e.printStackTrace()
                     error_msg = e.message
