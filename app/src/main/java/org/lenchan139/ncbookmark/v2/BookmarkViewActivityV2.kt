@@ -1,42 +1,33 @@
 package org.lenchan139.ncbookmark.v2
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import android.widget.ListView
 import android.widget.Toast
 
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.lenchan139.ncbookmark.Class.BookmarkItem
 import org.lenchan139.ncbookmark.Class.BookmarkItemV2
-import org.lenchan139.ncbookmark.Class.TagsItem
+import org.lenchan139.ncbookmark.Constants
 import org.lenchan139.ncbookmark.R
-import org.lenchan139.ncbookmark.v1.BookmarkViewActivity
 
 import java.io.IOException
 import java.net.URL
 import java.util.ArrayList
-import java.util.Objects
 
 class BookmarkViewActivityV2 : AppCompatActivity() {
     internal lateinit var jsonUrl: String
@@ -80,7 +71,7 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
             url = url + "/"
         }
         if (url != null && username != null && password != null) {
-            jsonUrl = url + "index.php/apps/bookmarks/public/rest/v2/bookmark?sortby=tags&page=-1"
+            jsonUrl = url + Constants.V2_API_ENDPOINT + "bookmark?sortby=tags&page=-1"
             Log.v("jsonUrl", jsonUrl)
         }
         gloTag = tag!!
@@ -217,7 +208,7 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
 
     private inner class DeleteTask : AsyncTask<URL, Int, Long>() {
         internal lateinit var result: Document
-        internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/bookmark/" + deleteId
+        internal var urlSe = Constants.V2_API_ENDPOINT + "bookmark/" + deleteId
         internal val base64login = String(Base64.encode(login.toByteArray(), 0))
         override fun doInBackground(vararg params: URL): Long? {
             if (deleteId != -1) {
