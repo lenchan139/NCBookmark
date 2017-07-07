@@ -1,11 +1,9 @@
 package org.lenchan139.ncbookmark.v2
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
 import android.util.Base64
 import android.util.Log
 import android.view.Menu
@@ -13,32 +11,28 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import android.widget.ListView
 import android.widget.Toast
 
 import org.json.JSONArray
 import org.json.JSONException
-import org.json.JSONObject
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.lenchan139.ncbookmark.Class.BookmarkItem
+import org.lenchan139.ncbookmark.Constants
 import org.lenchan139.ncbookmark.MainActivity
 import org.lenchan139.ncbookmark.R
-import org.lenchan139.ncbookmark.v1.BookmarkViewActivity
-import org.lenchan139.ncbookmark.v1.TagViewActivity
 
 import java.io.IOException
 import java.util.ArrayList
-import java.util.Objects
 
 class TagListActivityV2 : AppCompatActivity() {
     internal var urlNt: String? = null
     internal var username: String? = null
     internal var password: String? = null
     internal lateinit var login: String
-    internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/tag"
+    internal var urlSe = Constants.V2_API_ENDPOINT + "tag"
 
     override fun onResume() {
         DlTask().execute()

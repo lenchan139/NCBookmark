@@ -1,7 +1,5 @@
 package org.lenchan139.ncbookmark.v2
 
-import android.content.DialogInterface
-import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -12,7 +10,6 @@ import android.support.v7.widget.Toolbar
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
@@ -24,12 +21,11 @@ import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.lenchan139.ncbookmark.Class.TagsItem
-import org.lenchan139.ncbookmark.MainActivity
+import org.lenchan139.ncbookmark.Constants
 import org.lenchan139.ncbookmark.R
 
 import java.io.IOException
 import java.net.URL
-import java.util.ArrayList
 
 class AddBookmarkActivityV2 : AppCompatActivity() {
 
@@ -99,7 +95,7 @@ class AddBookmarkActivityV2 : AppCompatActivity() {
     }
 
     private inner class fetchTagsTask : AsyncTask<URL, Int, Long>() {
-        internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/tag"
+        internal var urlSe = Constants.V2_API_ENDPOINT + "tag"
         internal val base64login = String(Base64.encode(login.toByteArray(), 0))
         internal lateinit var result: Document
 
@@ -154,7 +150,7 @@ class AddBookmarkActivityV2 : AppCompatActivity() {
         internal lateinit var result: Document
         internal var no_error = true
         internal var error_msg: String? = null
-        internal var urlSe = "/index.php/apps/bookmarks/public/rest/v2/bookmark"
+        internal var urlSe = Constants.V2_API_ENDPOINT + "bookmark"
         internal val base64login = String(Base64.encode(login.toByteArray(), 0))
 
         override fun onPreExecute() {
