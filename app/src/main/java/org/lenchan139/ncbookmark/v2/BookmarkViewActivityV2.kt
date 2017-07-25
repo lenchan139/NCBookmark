@@ -92,6 +92,7 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
         internal val base64login = String(Base64.encode(login.toByteArray(), 0))
         override fun doInBackground(vararg urls: URL): Long? {
             if (gloTag == "") {
+
             } else {
                 jsonUrl = jsonUrl + "&tags[]=" + gloTag
             }
@@ -126,7 +127,7 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
 
                     for (i in 0..cast.length() - 1) {
                         val tempJ = cast.getJSONObject(i)
-                        if (tempJ.getString("tags") == "[\"\"]") {
+                        if (tempJ.getString("tags") == "[]") {
                             val tempBi = BookmarkItemV2()
                             tempBi.url = tempJ.getString("url")
                             tempBi.tags = tempJ.getJSONArray("tags")

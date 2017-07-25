@@ -8,8 +8,8 @@ android {
         applicationId "org.lenchan139.ncbookmark"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 5
-        versionName 'v5'
+        versionCode 6
+        versionName 'v6'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,6 +28,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
