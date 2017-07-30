@@ -165,10 +165,14 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
                 listviewTags.adapter = listAdptTags
 
                 listviewTags.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(jsonList[position].url))
+                    startActivity(intent)
+                }
+                listviewTags.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id -> true
                     val dialog = AlertDialog.Builder(this@BookmarkViewActivityV2)
                     val strOptions = arrayOf("Open", "Edit", "Delete")
                     dialog.setTitle(jsonList[position].title)
-                    dialog.setItems(strOptions) { dialog, which ->
+                    dialog.setItems(strOptions) { boolean1, which ->
                         if (which == 0) {
                             //open
                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(jsonList[position].url))
@@ -197,8 +201,9 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
                         }
                     }
                     dialog.show()
+                    true
                 }
-                listviewTags.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id -> false }
+
             } catch (e: JSONException) {
                 e.printStackTrace()
 
