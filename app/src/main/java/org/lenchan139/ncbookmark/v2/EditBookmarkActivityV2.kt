@@ -189,7 +189,15 @@ class EditBookmarkActivityV2 : AppCompatActivity() {
             if (err_check) {
                 val dialog = AlertDialog.Builder(this@EditBookmarkActivityV2)
                 dialog.setTitle("Exciting Tag")
-                dialog.setItems(tags) { dialog, which -> edtTag.setText(tags!![which]) }
+                dialog.setItems(tags) { dialog, which ->
+                    if(edtTag.text.trim().isEmpty()) {
+                        edtTag.setText(tags!![which])
+                    }else if(edtTag.text.toString().trim().lastIndexOf(",") == edtTag.text.trim().length-1){
+                        edtTag.setText(edtTag.text.toString() + tags!![which])
+                    }else if(true){
+                        edtTag.setText(edtTag.text.toString() + "," + tags!![which])
+                    }
+                }
                 dialog.setNegativeButton("Cancel", null)
                 dialog.show()
             }
