@@ -11,7 +11,8 @@ Basically, NCBookmark is under GPLv3.
 ## Screenshots
 <img src="https://github.com/lenchan139/NCBookmark/blob/master/screenshots/photo_2017-04-15_17-12-21.jpg?raw=true" width="280"> <img src="https://github.com/lenchan139/NCBookmark/blob/master/screenshots/photo_2017-04-15_17-12-19.jpg?raw=true" width="280"> 
 ## Download
-You can download this application from Play Store or Aptoide. Aptoide may faster than the Play Store.
+You can download this application from F-Droid, Play Store or Aptoide.
+- [F-Droid](https://f-droid.org/packages/org.lenchan139.ncbookmark/)
 - [Play Store](https://play.google.com/store/apps/details?id=org.lenchan139.ncbookmark)
 - [Aptoide](https://nc-bookmark-viewer.en.aptoide.com/)
 - [APK file](https://github.com/lenchan139/NCBookmark/blob/master/app/app-release.apk?raw=true)
