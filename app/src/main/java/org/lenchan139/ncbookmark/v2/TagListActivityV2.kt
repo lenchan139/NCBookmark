@@ -75,6 +75,8 @@ class TagListActivityV2 : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
 
+            }catch(e:IllegalArgumentException){
+
             }
 
             return null
@@ -107,7 +109,7 @@ class TagListActivityV2 : AppCompatActivity() {
                     }
 
                     //start print to UI
-                    val listviewTags = findViewById(R.id.tagList) as ListView
+                    val listviewTags = findViewById<ListView>(R.id.tagList)
                     listviewTags.visibility = View.VISIBLE
                     val listAdptTags = ArrayAdapter<String>(this@TagListActivityV2, android.R.layout.simple_list_item_1, android.R.id.text1, strTags)
                     listviewTags.adapter = listAdptTags

@@ -8,21 +8,18 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
-import android.view.View
 import android.widget.*
-import org.json.JSONArray
-import org.json.JSONException
 import org.jsoup.Connection
+import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.lenchan139.ncbookmark.Class.BookmarkItem
 
 import org.lenchan139.ncbookmark.v1.TagViewActivity
 import org.lenchan139.ncbookmark.v2.TagListActivityV2
+import java.io.FileNotFoundException
 import java.io.IOException
-import java.util.ArrayList
-
-import java.util.Objects
+import java.net.URL
+import java.net.UnknownHostException
 
 class MainActivity : AppCompatActivity() {
     internal lateinit var edtUrl: EditText
@@ -33,7 +30,10 @@ class MainActivity : AppCompatActivity() {
     internal lateinit var url: String
     internal lateinit var username: String
     internal lateinit var password: String
-    internal lateinit var spinner : Spinner
+    internal lateinit var spinnerApi : Spinner
+    internal lateinit var spinnerUrlPrefix : Spinner
+    val apiString = arrayOf("v2", "v1")
+    val urlPrefixArray = arrayOf("https://","http://")
     internal var urlSe = Constants.V2_API_ENDPOINT + "tag"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,34 +45,48 @@ class MainActivity : AppCompatActivity() {
         edtPassword = findViewById<EditText>(R.id.password)
         btnSave = findViewById<Button>(R.id.save)
 
-        spinner = findViewById<Spinner>(R.id.spinnerApi)
-        val apiString = arrayOf("v2", "v1")
-        val list1 = ArrayAdapter(this@MainActivity,
+        spinnerApi = findViewById<Spinner>(R.id.spinnerApi)
+        spinnerUrlPrefix = findViewById<Spinner>(R.id.spinnerUrl)
+        val listAdapterApi = ArrayAdapter(this@MainActivity,
                 android.R.layout.simple_spinner_dropdown_item,
                 apiString)
-        spinner.adapter = list1
+        val listAdapterUrl = ArrayAdapter(this@MainActivity,
+                android.R.layout.simple_spinner_dropdown_item,
+                urlPrefixArray)
+        spinnerApi.adapter = listAdapterApi
+        spinnerUrlPrefix.adapter = listAdapterUrl
 
 
         url = sp.getString("url", "")
         username = sp.getString("username", "")
         password = sp.getString("password", "")
         if (url != "" && username != "" && password != "") {
-            startActivity(startBookmarkView(this, url, username, password, spinner))
+            startActivity(startBookmarkView(this, url, username, password, spinnerApi))
             finish()
         } else {
 
             btnSave.setOnClickListener {
-                //Toast.makeText(MainActivity.this, spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(MainActivity.this, spinnerApi.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                Log.v("urlHere",url)
                 url = edtUrl.text.toString()
+                if(url.startsWith("http")){
+                    url.replace("https://","").replace("http://","")
+                }
+                if(url.lastIndexOf("/") == url.length-1){
+                    url += '/'
+                }
+                url = urlPrefixArray.get(spinnerUrlPrefix.selectedItemPosition) + edtUrl.text.toString() + urlSe
                 username = edtUsername.text.toString()
                 password = edtPassword.text.toString()
+                DlTask().execute()
+
             }
         }
 
     }
 
     fun startBookmarkView(activity: Activity, url: String, username: String, password: String, spinner: Spinner): Intent? {
+        btnSave.setEnabled(false)
         if (spinner.selectedItem.toString().contains("v1")) {
             val intent = Intent(activity, TagViewActivity::class.java)
             intent.putExtra("url", url)
@@ -94,43 +108,70 @@ class MainActivity : AppCompatActivity() {
     }
 
     internal inner class DlTask : AsyncTask<String, Int, Int>() {
-        var result: Document? = null
+        var result: String? = null
         val login = username + ":" + password
         var isConnected = false
+        var isValid = false
+        var errorMessage : String? = null
         val base64login = String(Base64.encode(login.toByteArray(), 0))
         override fun onPreExecute() {
             super.onPreExecute()
         }
 
         override fun doInBackground(vararg params: String): Int? {
+            Log.v("requestUrl",url)
             try {
-                result = Jsoup.connect(url!! + urlSe)
+                val r = Jsoup.connect(url)
                         .ignoreContentType(true)
                         .header("Authorization", "Basic " + base64login)
                         .method(Connection.Method.GET)
                         .execute().parse()
                 isConnected = true
+                if(r != null){
+                    result = r.body().text()
+                    isValid = true
+                }
+                Log.v("JSON_FOR_VALIDATE_ACC",r.toString())
+                //val json = JSON
+                isConnected = true
+            }catch (e: HttpStatusException) {
+                e.printStackTrace()
+                errorMessage = "It seems url, username or password is invalid."
+            }catch(e:IllegalArgumentException){
+                    e.printStackTrace()
+                    isConnected = false
+                    errorMessage = "Incorrent URL, please correct it."
+            }catch (e:UnknownHostException){
+                e.printStackTrace()
+                isConnected = false
+                errorMessage = "Unknown host on url, please correct it."
+            }catch (e:FileNotFoundException){
+                e.printStackTrace()
+                isConnected = true
+                errorMessage = ""
             } catch (e: IOException) {
                 e.printStackTrace()
                 isConnected = false
-
-            }catch(e:IllegalArgumentException){
-
-                e.printStackTrace()
-                isConnected = false
+                errorMessage = "Connection error, please try again later."
             }
 
             return null
         }
 
         override fun onPostExecute(integer: Int?) {
-            if (url.length > 0 && username.length > 0 && password.length > 0 && false) {
+            btnSave.setEnabled(true)
+            if(errorMessage != null){
+                Toast.makeText(this@MainActivity,errorMessage,Toast.LENGTH_SHORT).show()
+                Log.v("error_type_on_validate", errorMessage)
+            }else if (url.length > 0 && username.length > 0 && password.length > 0 && isConnected && isValid) {
                 Toast.makeText(this@MainActivity, "Saved.", Toast.LENGTH_SHORT).show()
                 sp.edit().putString("url", url).commit()
                 sp.edit().putString("username", username).commit()
                 sp.edit().putString("password", password).commit()
-                startActivity(startBookmarkView(this@MainActivity, url, username, password, spinner))
+                startActivity(startBookmarkView(this@MainActivity, url, username, password, spinnerApi))
                 finish()
+            }else{
+                Toast.makeText(this@MainActivity,"Something was wrong",Toast.LENGTH_SHORT).show()
             }
             super.onPostExecute(integer)
         }

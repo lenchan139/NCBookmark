@@ -45,7 +45,7 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_view)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         var url: String? = intent.getStringExtra("url")
@@ -159,7 +159,7 @@ class BookmarkViewActivityV2 : AppCompatActivity() {
                 }
 
                 //start print to UI
-                val listviewTags = findViewById(R.id.tagList) as ListView
+                val listviewTags = findViewById<ListView>(R.id.tagList)
                 listviewTags.visibility = View.VISIBLE
                 val listAdptTags = ArrayAdapter<String>(this@BookmarkViewActivityV2, android.R.layout.simple_list_item_1, android.R.id.text1, strTags)
                 listviewTags.adapter = listAdptTags

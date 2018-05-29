@@ -43,19 +43,19 @@ class AddBookmarkActivityV2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_bookmark_v2)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        edtDescr = findViewById(R.id.description) as EditText
-        edtTag = findViewById(R.id.tag) as EditText
-        edtTitle = findViewById(R.id.title) as EditText
-        edtUrl = findViewById(R.id.url) as EditText
-        btnSelectTag = findViewById(R.id.selectTag) as Button
-        btnSubmit = findViewById(R.id.submit) as Button
+        edtDescr = findViewById<EditText>(R.id.description)
+        edtTag = findViewById<EditText>(R.id.tag)
+        edtTitle = findViewById<EditText>(R.id.title)
+        edtUrl = findViewById<EditText>(R.id.url)
+        btnSelectTag = findViewById<Button>(R.id.selectTag)
+        btnSubmit = findViewById<Button>(R.id.submit)
 
         val window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
-        val fab = findViewById(R.id.fab) as FloatingActionButton
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
