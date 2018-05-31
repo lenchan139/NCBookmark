@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 if(url.lastIndexOf("/") == url.length-1){
                     url += '/'
                 }
-                url = urlPrefixArray.get(spinnerUrlPrefix.selectedItemPosition) + edtUrl.text.toString() + urlSe
+                url = urlPrefixArray.get(spinnerUrlPrefix.selectedItemPosition) + edtUrl.text.toString()
                 username = edtUsername.text.toString()
                 password = edtPassword.text.toString()
                 DlTask().execute()
@@ -119,12 +119,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: String): Int? {
-            Log.v("requestUrl",url)
+            Log.v("requestUrl",url+ urlSe)
             try {
-                val r = Jsoup.connect(url)
+                val r = Jsoup.connect(url+ urlSe)
                         .ignoreContentType(true)
                         .header("Authorization", "Basic " + base64login)
                         .method(Connection.Method.GET)
+                        .timeout(30*1000)
                         .execute().parse()
                 isConnected = true
                 if(r != null){
