@@ -64,7 +64,27 @@ class MainActivity : AppCompatActivity() {
             startActivity(startBookmarkView(this, url, username, password, spinnerApi))
             finish()
         } else {
-
+            btnSave.setOnLongClickListener {
+                //Toast.makeText(MainActivity.this, spinnerApi.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                Log.v("urlHere",url)
+                url = edtUrl.text.toString()
+                if(url.startsWith("http")){
+                    url.replace("https://","").replace("http://","")
+                }
+                if(url.lastIndexOf("/") == url.length-1){
+                    url += '/'
+                }
+                url = urlPrefixArray.get(spinnerUrlPrefix.selectedItemPosition) + edtUrl.text.toString()
+                username = edtUsername.text.toString()
+                password = edtPassword.text.toString()
+                Toast.makeText(this@MainActivity, "Saved.", Toast.LENGTH_SHORT).show()
+                sp.edit().putString("url", url).commit()
+                sp.edit().putString("username", username).commit()
+                sp.edit().putString("password", password).commit()
+                startActivity(startBookmarkView(this@MainActivity, url, username, password, spinnerApi))
+                finish()
+                true
+            }
             btnSave.setOnClickListener {
                 //Toast.makeText(MainActivity.this, spinnerApi.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 Log.v("urlHere",url)
