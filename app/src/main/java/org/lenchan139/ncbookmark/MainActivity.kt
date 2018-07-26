@@ -16,6 +16,7 @@ import org.jsoup.nodes.Document
 
 import org.lenchan139.ncbookmark.v1.TagViewActivity
 import org.lenchan139.ncbookmark.v2.TagListActivityV2
+import org.lenchan139.ncbookmark.v2floccus.V2FloccusViewActivity
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.net.URL
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     internal lateinit var password: String
     internal lateinit var spinnerApi : Spinner
     internal lateinit var spinnerUrlPrefix : Spinner
-    val apiString = arrayOf("v2", "v1")
+    val apiString = arrayOf("v2 with Floccus", "v2", "v1")
     val urlPrefixArray = arrayOf("https://","http://")
     internal var urlSe = Constants.V2_API_ENDPOINT + "tag"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,21 +108,28 @@ class MainActivity : AppCompatActivity() {
 
     fun startBookmarkView(activity: Activity, url: String, username: String, password: String, spinner: Spinner): Intent? {
         btnSave.setEnabled(false)
-        if (spinner.selectedItem.toString().contains("v1")) {
+        if (spinner.selectedItem.toString().equals("v1")) {
             val intent = Intent(activity, TagViewActivity::class.java)
             intent.putExtra("url", url)
             intent.putExtra("username", username)
             intent.putExtra("password", password)
             sp.edit().putInt("apiVersion", 1).commit()
             return intent
-        } else if (spinner.selectedItem.toString().contains("v2")) {
+        } else if (spinner.selectedItem.toString().equals("v2")) {
             val intent = Intent(activity, TagListActivityV2::class.java)
             intent.putExtra("url", url)
             intent.putExtra("username", username)
             intent.putExtra("password", password)
             sp.edit().putInt("apiVersion", 2).commit()
             return intent
-        } else {
+        } else if(spinner.selectedItem.toString().equals("v2 with Floccus")) {
+            val intent = Intent(activity, V2FloccusViewActivity::class.java)
+            intent.putExtra("url", url)
+            intent.putExtra("username", username)
+            intent.putExtra("password", password)
+            sp.edit().putInt("apiVersion", 2).commit()
+            return intent
+        }else{
             return null
         }
 

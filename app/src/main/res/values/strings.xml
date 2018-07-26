@@ -10,4 +10,5 @@
     <string name="title_activity_bookmark_view_v2">BookmarkViewActivityV2</string>
     <string name="title_activity_add_bookmark_v2">AddBookmarkActivityV2</string>
     <string name="title_activity_edit_bookmark_v2">EditBookmarkActivityV2</string>
+    <string name="title_activity_v2_floccus_view">V2FloccusViewActivity</string>
 </resources>
