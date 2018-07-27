@@ -8,8 +8,8 @@ android {
         applicationId "org.lenchan139.ncbookmark"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 13
-        versionName 'v13'
+        versionCode 14
+        versionName 'v14'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

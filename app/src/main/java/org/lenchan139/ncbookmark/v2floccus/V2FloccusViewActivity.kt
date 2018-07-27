@@ -255,8 +255,11 @@ class V2FloccusViewActivity : AppCompatActivity() {
                 displayArrayList.set(i,"\uD83D\uDCC1 " + displayArrayList.get(i))
             }
             for(obj in jsonList){
-                arrListviewOnClick.add(FloccusListviewItem(FloccusListviewItemConst().ITEM_TYPE_BOOKMARK,obj.url!!,obj))
-                displayArrayList.add("\uD83D\uDD16 " + obj.title!!)
+
+                if(obj.hasTag(arrayFloccusHelper.currentPath)) {
+                    arrListviewOnClick.add(FloccusListviewItem(FloccusListviewItemConst().ITEM_TYPE_BOOKMARK, obj.url!!, obj))
+                    displayArrayList.add("\uD83D\uDD16 " + obj.title!!)
+                }
             }
 
 

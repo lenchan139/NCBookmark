@@ -16,4 +16,14 @@ class BookmarkItemV2{
     override fun toString(): String {
         return "$url|$title|$tags"
     }
+    fun hasTag(tag:String): Boolean {
+        if(tags != null){
+            for(o in 0..tags!!.length()-1){
+                if(tag.equals(tags!![o])){
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
