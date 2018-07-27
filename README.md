@@ -9,7 +9,7 @@ Basically, NCBookmark is under GPLv3.
   A few files is coding by myself. Those files is licensing under GPLv3.  
   You can go to (http://wiki.linux.org.hk/w/GPLv3) view the full content of the license.
 ## Screenshots
-<img src="https://github.com/lenchan139/NCBookmark/blob/master/screenshots/photo_2017-04-15_17-12-21.jpg?raw=true" width="280"> <img src="https://github.com/lenchan139/NCBookmark/blob/master/screenshots/photo_2017-04-15_17-12-19.jpg?raw=true" width="280"> 
+<img src="https://github.com/lenchan139/NCBookmark/raw/master/screenshots/photo_2017-04-15_17-12-21.jpg" width="280"> <img src="https://github.com/lenchan139/NCBookmark/raw/master/screenshots/photo_2017-04-15_17-12-19.jpge" width="280"><img src="https://gitlab.com/lenchan139/NCBookmark/raw/master/screenshots/Screen_Shot_2018-07-27_at_13.26.20.png" width="280"> 
 ## Download
 You can download this application from F-Droid, Play Store or Aptoide.
 - [F-Droid](https://f-droid.org/packages/org.lenchan139.ncbookmark/)
