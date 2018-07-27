@@ -20,6 +20,35 @@ class FloccusHelper{
         bookmarks.add(obj)
         return bookmarks
     }
+    fun canBack():Boolean{
+        return (currentPath.contains(">")) || (currentPathLevel>0)
+    }
+    fun goBack():Boolean{
+        if(currentPath.contains(">") || currentPathLevel<=0){
+            val curr = currentPath.split(">").toTypedArray()
+            curr[curr.lastIndex] = ""
+            var newPath = curr[0]
+            for(i in 1..curr.lastIndex-1){
+                newPath += ">" + curr[i]
+            }
+            currentPath = newPath
+            currentPathLevel -= 1
+            return true
+        }else{
+            return false
+        }
+    }
+    fun enterNextUseTag(nextTag:String):Boolean{
+        val nextPath = currentPath + ">" + nextTag
+        for(obj in bookmarks){
+            if(obj.getFullPath().contains(nextPath)){
+                currentPath = nextPath
+                currentPathLevel += 1
+                return true
+            }
+        }
+        return false
+    }
     fun getPossibleLowerPath():ArrayList<String>{
         val arraylist = ArrayList<String>()
         val nextIndex = currentPathLevel + 1
@@ -32,12 +61,14 @@ class FloccusHelper{
             Log.v("arrayTestFH3",bookmarks[i].getFullPath())
             if (bookmarks[i].getFullPath().startsWith(currentPath) && arr.size > 0){
                 Log.v("arrayTest", arr.toString())
-                if(!arraylist.contains(arr[nextIndex])) {
-                    arraylist.add(arr[nextIndex])
+                if(arr.size > nextIndex) {
+                    if (!arraylist.contains(arr[nextIndex])) {
+                        arraylist.add(arr[nextIndex])
+                    }
                 }
-
             }
         }
+        Log.v("currentLevel",arraylist.toArray().contentToString())
         return arraylist
     }
 }

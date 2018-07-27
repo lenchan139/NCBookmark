@@ -7,9 +7,22 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".v2floccus.V2FloccusViewActivity"
     tools:showIn="@layout/activity_v2_floccus_view">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listview">
     </ListView>
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
