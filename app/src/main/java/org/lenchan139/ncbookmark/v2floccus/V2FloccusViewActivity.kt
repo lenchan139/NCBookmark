@@ -88,7 +88,7 @@ class V2FloccusViewActivity : AppCompatActivity() {
             if(arrayFloccusHelper.goBack()){
                 updateTagsGUI()
             }else{
-                
+
             }
         }else{
 
