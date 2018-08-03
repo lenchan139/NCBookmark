@@ -1,6 +1,7 @@
 package org.lenchan139.ncbookmark.v2floccus
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
@@ -45,6 +46,7 @@ class V2FloccusViewActivity : AppCompatActivity() {
     internal lateinit var login: String
     internal var urlSe = Constants.V2_API_ENDPOINT + "tag"
     internal var arrayFloccusHelper = FloccusHelper()
+    lateinit var settings : SharedPreferences
     var isInit = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,7 @@ class V2FloccusViewActivity : AppCompatActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+        settings = getSharedPreferences("data",0)
         fab.setOnClickListener { view ->
             openAddBookmarkActivity()
         }
@@ -105,8 +108,7 @@ class V2FloccusViewActivity : AppCompatActivity() {
         val id = item.itemId
 
         if (id == R.id.action_reset) {
-            val sp = getSharedPreferences("data", 0)
-            sp.edit().clear().commit()
+            settings.edit().clear().commit()
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
@@ -133,7 +135,7 @@ class V2FloccusViewActivity : AppCompatActivity() {
     }
 
     internal inner class DlTagTask : AsyncTask<String, Int, Int>() {
-        var result: Document? = null
+        var result: String? = null
 
         val base64login = String(Base64.encode(login.toByteArray(), 0))
         override fun onPreExecute() {
@@ -141,15 +143,17 @@ class V2FloccusViewActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg params: String): Int? {
+            val TAG_TAG_STRING = "TAG_TAG_STRING"
             try {
                 result = Jsoup.connect(urlNt!! + urlSe)
                         .ignoreContentType(true)
                         .header("Authorization", "Basic " + base64login)
                         .method(Connection.Method.GET)
-                        .execute().parse()
+                        .execute().parse().body().text()
+                settings.edit().putString(TAG_TAG_STRING, result.toString()).commit()
             } catch (e: IOException) {
                 e.printStackTrace()
-
+                result = settings.getString(TAG_TAG_STRING,null)
             }catch(e:IllegalArgumentException){
 
             }
@@ -159,13 +163,13 @@ class V2FloccusViewActivity : AppCompatActivity() {
 
         override fun onPostExecute(integer: Int?) {
             if (result != null) {
-                Log.v("testLog", result!!.body().text())
+                Log.v("testLog", result!!)
 
                 val jsonList = ArrayList<BookmarkItem>()
                 val arrListviewOnClick = ArrayList<FloccusListviewItem>()
                 try {
                     val listTags = ArrayList<String>()
-                    var jsonArray = JSONArray(result!!.body().text())
+                    var jsonArray = JSONArray(result!!)
                     listTags.add("!ungrouped")
                     for (i in 0..jsonArray.length()-1){
                         listTags.add(jsonArray.getString(i))
@@ -221,15 +225,18 @@ class V2FloccusViewActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg params: String?): Int {
             Log.v("jsonTextCurr", jsonUrl)
+            val TAG_BOOKMARK_CACHE = "TAG_BOOKMARK_CACHE"
             try {
                 jsonText = Jsoup.connect(jsonUrl)
                         .header("Authorization", "Basic " + base64login)
                         .ignoreContentType(true)
                         .get().body().text()
                 Log.v("jsonText", tag + "|" + jsonText)
+                settings.edit().putString(TAG_BOOKMARK_CACHE, jsonText).commit()
             } catch (e: IOException) {
                 e.printStackTrace()
-                Toast.makeText(this@V2FloccusViewActivity, "Check your network connection!", Toast.LENGTH_SHORT).show();
+                jsonText = settings.getString(TAG_BOOKMARK_CACHE,null)
+                //Toast.makeText(this@V2FloccusViewActivity, "Check your network connection!", Toast.LENGTH_SHORT).show();
             }
             return 0
         }
