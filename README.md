@@ -1,4 +1,4 @@
-# This project has moved.
+# This project has moved GitLab
 This project has move to: [https://gitlab.com/lenchan139/NCBookmark](https://gitlab.com/lenchan139/NCBookmark)
 # NCBookmark Viewer
 This is a Veeeeeeeeerrrrrry lightweight viewer for NextCloud Bookamrk. I made it because my needs.   
