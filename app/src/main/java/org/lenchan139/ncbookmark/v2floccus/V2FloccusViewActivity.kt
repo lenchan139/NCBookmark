@@ -1,5 +1,6 @@
 package org.lenchan139.ncbookmark.v2floccus
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -88,10 +89,10 @@ class V2FloccusViewActivity : AppCompatActivity() {
             if(arrayFloccusHelper.goBack()){
                 updateTagsGUI()
             }else{
-
+                exitActivity()
             }
         }else{
-
+            exitActivity()
         }
     }
 
@@ -201,7 +202,16 @@ class V2FloccusViewActivity : AppCompatActivity() {
         }
 
     }
-
+    fun exitActivity(){
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Exit?")
+        dialog.setMessage("Are you sure to exit NCBookmark?")
+        dialog.setPositiveButton("Exit", DialogInterface.OnClickListener { dialog, which ->
+            finish()
+        })
+        dialog.setNegativeButton("Cancel",null)
+        dialog.create().show()
+    }
     fun updateTagsGUI(){
         supportActionBar?.title = arrayFloccusHelper.currentPath
         progressBar.visibility = View.VISIBLE
